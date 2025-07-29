@@ -4,6 +4,9 @@
  * 
  * This template is used when creating new WordPress sites.
  * Placeholders will be replaced with actual values during site creation.
+ * 
+ * IMPORTANT: This is a TEMPLATE file. The placeholders like {{DB_NAME}} 
+ * will be replaced with actual values when a new site is created.
  */
 
 // Database configuration
@@ -37,8 +40,9 @@ define('DISALLOW_FILE_EDIT', true);
 define('DISALLOW_FILE_MODS', false);
 
 // Debug settings (disable in production)
-define('WP_DEBUG', '{{WP_DEBUG}}' === 'true');
-define('WP_DEBUG_LOG', '{{WP_DEBUG}}' === 'true');
+// {{WP_DEBUG}} will be replaced with true or false
+define('WP_DEBUG', '{{WP_DEBUG}}');
+define('WP_DEBUG_LOG', {{WP_DEBUG_LOG}});
 define('WP_DEBUG_DISPLAY', false);
 define('SCRIPT_DEBUG', false);
 
@@ -59,12 +63,9 @@ define('NONCE_SALT',       '{{NONCE_SALT}}');
 // Multisite configuration (disabled for individual sites)
 define('WP_ALLOW_MULTISITE', false);
 
-// Force SSL for admin (enable in production)
-// This will be replaced during site creation with either:
-// define('FORCE_SSL_ADMIN', true);  // for production
-// or
-// define('FORCE_SSL_ADMIN', false); // for development
-{{FORCE_SSL_ADMIN}}
+// Force SSL for admin
+// {{FORCE_SSL_ADMIN}} will be replaced with true or false
+define('FORCE_SSL_ADMIN', {{FORCE_SSL_ADMIN}});
 
 // Performance optimizations
 define('COMPRESS_CSS', true);
