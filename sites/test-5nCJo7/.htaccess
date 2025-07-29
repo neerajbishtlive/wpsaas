@@ -1,0 +1,16 @@
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /sites/test-5nCJo7/
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /sites/test-5nCJo7/index.php [L]
+</IfModule>
+# END WordPress
+
+# Prevent WordPress from redirecting to setup
+<IfModule mod_env.c>
+SetEnv WP_HOME http://localhost:8000/sites/test-5nCJo7
+SetEnv WP_SITEURL http://localhost:8000/sites/test-5nCJo7
+</IfModule>

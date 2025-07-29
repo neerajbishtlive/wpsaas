@@ -1,0 +1,75 @@
+# .htaccess - Place in control-panel/public/
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Protect sensitive files
+    RewriteRule ^\.env$ - [F,L]
+    RewriteRule ^storage/ - [F,L]
+    
+    # Handle WordPress site requests
+    # Prevent infinite loops by checking if wp.php is already in the URL
+    RewriteCond %{REQUEST_URI} !^/wp\.php
+    
+    # Route WordPress admin requests
+    RewriteCond %{QUERY_STRING} site=([^&]+)
+    RewriteRule ^wp-admin(/.*)?$ /wp.php?site=%1&wp-admin=$1 [L,QSA]
+    
+    # Route WordPress content requests
+    RewriteCond %{QUERY_STRING} site=([^&]+)
+    RewriteRule ^(wp-content/.*)$ /wp.php?site=%1&resource=$1 [L,QSA]
+    
+    # Route WordPress core files (wp-login.php, wp-cron.php, etc.)
+    RewriteCond %{QUERY_STRING} site=([^&]+)
+    RewriteRule ^(wp-[^/]+\.php)$ /wp.php?site=%1&wp-file=$1 [L,QSA]
+    
+    # Handle file requests
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    
+    # Laravel routes (if not a WordPress site request)
+    RewriteCond %{QUERY_STRING} !site=
+    RewriteRule ^(.*)$ index.php/$1 [L]
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Cache control
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Images
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    
+    # CSS and JavaScript
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    
+    # Fonts
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# Disable directory browsing
+Options -Indexes
+
+# Protect WordPress files
+<FilesMatch "^(wp-config\.php|\.htaccess)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>

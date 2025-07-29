@@ -1,0 +1,57 @@
+<?php
+/**
+ * WordPress Configuration File
+ * Site: demo-site-LmczLn
+ */
+
+// Database configuration
+define('DB_NAME', 'wp_saas_control');
+define('DB_USER', 'root');
+define('DB_PASSWORD', 'Bhunee@@1315');
+define('DB_HOST', '127.0.0.1');
+define('DB_CHARSET', 'utf8mb4');
+define('DB_COLLATE', '');
+
+// Table prefix
+$table_prefix = 'wp_demositeLmczLn_';
+
+// WordPress Memory
+define('WP_MEMORY_LIMIT', '256M');
+define('WP_MAX_MEMORY_LIMIT', '512M');
+
+// URLs
+define('WP_HOME', 'http://localhost:8000/wp.php?site=demo-site-LmczLn');
+define('WP_SITEURL', 'http://localhost:8000/wp.php?site=demo-site-LmczLn');
+
+// Content Directory
+define('WP_CONTENT_DIR', dirname(__FILE__) . '/wp-content');
+define('WP_CONTENT_URL', 'http://localhost:8000/sites/demo-site-LmczLn/wp-content');
+
+// Debug
+define('WP_DEBUG', true);
+define('WP_DEBUG_LOG', true);
+define('WP_DEBUG_DISPLAY', true);
+
+// Disable file editing
+define('DISALLOW_FILE_EDIT', true);
+
+// Authentication Keys and Salts
+define('AUTH_KEY',         'put your unique phrase here');
+define('SECURE_AUTH_KEY',  'put your unique phrase here');
+define('LOGGED_IN_KEY',    'put your unique phrase here');
+define('NONCE_KEY',        'put your unique phrase here');
+define('AUTH_SALT',        'put your unique phrase here');
+define('SECURE_AUTH_SALT', 'put your unique phrase here');
+define('LOGGED_IN_SALT',   'put your unique phrase here');
+define('NONCE_SALT',       'put your unique phrase here');
+
+// Absolute path to the WordPress directory
+if (!defined('ABSPATH')) {
+    define('ABSPATH', dirname(__FILE__, 3) . '/wordpress-core/');
+}
+
+// Sets up WordPress vars and included files
+// Load WordPress
+if (!defined('WPINC')) {
+    require_once ABSPATH . '/wp-settings.php';
+}
