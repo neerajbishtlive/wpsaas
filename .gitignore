@@ -1,0 +1,82 @@
+# Laravel & PHP
+/control-panel/vendor/
+/control-panel/node_modules/
+/control-panel/public/hot
+/control-panel/public/storage
+/control-panel/storage/*.key
+/control-panel/.env
+/control-panel/.env.backup
+/control-panel/.phpunit.result.cache
+/control-panel/Homestead.json
+/control-panel/Homestead.yaml
+/control-panel/npm-debug.log
+/control-panel/yarn-error.log
+/control-panel/.idea
+/control-panel/.vscode
+/control-panel/.vagrant
+/control-panel/.DS_Store
+
+# WordPress Sites - Ignore all site data but keep structure
+/sites/*
+!/sites/.gitkeep
+!/sites/README.md
+
+# But if you want to track a demo site structure, uncomment below:
+#!/sites/demo-site/
+#/sites/demo-site/*
+#!/sites/demo-site/wp-content/
+#!/sites/demo-site/wp-content/themes/.gitkeep
+#!/sites/demo-site/wp-content/plugins/.gitkeep
+#!/sites/demo-site/wp-content/uploads/.gitkeep
+
+# WordPress Core - Only track if you've made modifications
+/wordpress-core/wp-content/uploads/
+/wordpress-core/wp-content/upgrade/
+/wordpress-core/wp-content/cache/
+/wordpress-core/wp-content/backups/
+
+# Database dumps
+*.sql
+*.sql.gz
+*.sql.zip
+
+# Logs
+*.log
+/control-panel/storage/logs/*
+!/control-panel/storage/logs/.gitkeep
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE Files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
+*.cache
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Compressed files (usually backups)
+*.zip
+*.tar.gz
+*.rar
+
+# Environment files
+.env
+.env.*
+!.env.example
