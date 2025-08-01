@@ -1,41 +1,21 @@
 <?php
-/**
- * Custom development server for handling subdomains
- * Place this in control-panel/server.php
- */
 
-$uri = urldecode(
-    parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
-);
+$uri = urldecode(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+$host = $_SERVER['HTTP_HOST'];
 
-// Get host
-$host = $_SERVER['HTTP_HOST'] ?? 'localhost';
-$host_without_port = preg_replace('/:\d+$/', '', $host);
-
-// Check if this is a subdomain request (not control panel)
-if (preg_match('/^([a-zA-Z0-9-]+)\.wptest\.local$/', $host_without_port, $matches)) {
+// Handle subdomains
+if (preg_match('/^([a-zA-Z0-9-]+)\.(wptest\.local|wpsaas\.in)/', $host, $matches)) {
     $subdomain = $matches[1];
     
-    // If it's the control subdomain, route to Laravel
     if ($subdomain === 'control') {
-        // Check if requesting a static file
-        if ($uri !== '/' && file_exists(__DIR__.'/public'.$uri)) {
-            return false;
-        }
+        // Laravel control panel
         require_once __DIR__.'/public/index.php';
-        return;
+    } else {
+        // WordPress sites
+        $_SERVER['SCRIPT_NAME'] = '/wp.php';
+        require_once __DIR__.'/public/wp.php';
     }
-    
-    // Otherwise, it's a WordPress site - route to wp.php
-    $_SERVER['REQUEST_URI'] = '/wp.php' . ($_SERVER['REQUEST_URI'] ?? '/');
-    require_once __DIR__.'/public/wp.php';
-    return;
+} else {
+    // Default to control panel
+    require_once __DIR__.'/public/index.php';
 }
-
-// Default behavior - check for static files
-if ($uri !== '/' && file_exists(__DIR__.'/public'.$uri)) {
-    return false;
-}
-
-// Otherwise, route to Laravel
-require_once __DIR__.'/public/index.php';
